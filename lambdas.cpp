@@ -4,13 +4,16 @@
 #include <algorithm>
 #include <cstdlib>
 #include <cmath>
+#include <functional>
 
 using std::cout;
 using std::endl;
 using std::vector;
 using std::setw;
+using std::function;
 
 vector<double> createNumbers(double from, double to, double step);
+function<double (double)> getPowerer(int power);
 
 int main(int argc, char** argv)
 {
@@ -39,7 +42,7 @@ int main(int argc, char** argv)
 		step = strtod(argv[4],NULL);
 	}
 
-	auto powered = [power](double a){return pow(a,power);};
+	auto powered = getPowerer(power);
 	auto numbers = createNumbers(from,to,step);
 
 
@@ -69,4 +72,9 @@ vector<double> createNumbers(double from, double to, double step)
 		numbers.push_back(i);
 	}
 	return numbers;
+}
+
+function<double (double)> getPowerer(int power)
+{
+	return [power](double a){return pow(a,power);};
 }
