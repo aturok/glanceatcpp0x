@@ -1,45 +1,57 @@
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
+#include <cmath>
 
 using std::cout;
 using std::endl;
 using std::vector;
+using std::setw;
 
 vector<double> createNumbers(double from, double to, double step);
 
 int main(int argc, char** argv)
 {
+	int power = 2;
 	double from = 0.0;
 	double to = 10.0;
 	double step = 1.0;
 	
 	if(argc > 1)
 	{
-		from = strtod(argv[1],NULL);
+		power = atoi(argv[1]);
 	}
 
 	if(argc > 2)
 	{
-		to = strtod(argv[2],NULL);
+		from = strtod(argv[2],NULL);
 	}
 
 	if(argc > 3)
 	{
-		step = strtod(argv[3],NULL);
+		to = strtod(argv[3],NULL);
 	}
 
-	auto square = [](double a){return a*a;};
+	if(argc > 4)
+	{
+		step = strtod(argv[4],NULL);
+	}
+
+	auto powered = [power](double a){return pow(a,power);};
 	auto numbers = createNumbers(from,to,step);
 
-	cout << "Squares for ["<< from << ", " << to << "). (Step is " << step << ")." << endl;
+
+	const int outFieldW = 8;
+	cout << "For ["<< from << ", " << to << "). (Step is " << step << ")." << endl;
+	cout << std::setiosflags(std::ios::left) << setw(outFieldW) << "x" << "x^" << power << endl;
 	for_each(
 		numbers.begin(),
 		numbers.end(),
 		[=](double n)
 		{
-			cout << n << " squared is " << square(n) << endl;
+			cout << setw(outFieldW) << n << setw(outFieldW) << powered(n) << endl;
 		});
 
 	return 0;
