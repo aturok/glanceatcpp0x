@@ -10,12 +10,14 @@ int main(int argc, char** argv)
 	cout << "Hello, " << name << "!" << endl;
 
 
-	auto square = [](int a){return a*a;};
+	auto square = [](double a){return a*a;};
 
 	for(int i = 0; i < 10; ++i)
 	{
 		cout << i << " squared is " << square(i) << endl;
 	}
+
+	cout << "9.5 squared is " << square(9.5) << endl;
 
 	return 0;
 }
