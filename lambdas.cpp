@@ -1,28 +1,43 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
 
 using std::cout;
 using std::endl;
 using std::vector;
 
-vector<int> createNumbers(int from, int to);
+vector<double> createNumbers(double from, double to, double step);
 
 int main(int argc, char** argv)
 {
-	char * name = argc < 2 ? "stranger" : argv[1];
+	double from = 0.0;
+	double to = 10.0;
+	double step = 1.0;
+	
+	if(argc > 1)
+	{
+		from = strtod(argv[1],NULL);
+	}
 
-	cout << "Hello, " << name << "!" << endl;
+	if(argc > 2)
+	{
+		to = strtod(argv[2],NULL);
+	}
 
+	if(argc > 3)
+	{
+		step = strtod(argv[3],NULL);
+	}
 
 	auto square = [](double a){return a*a;};
+	auto numbers = createNumbers(from,to,step);
 
-	auto numbers = createNumbers(0,20);
-
+	cout << "Squares for ["<< from << ", " << to << "). (Step is " << step << ")." << endl;
 	for_each(
 		numbers.begin(),
 		numbers.end(),
-		[=](int n)
+		[=](double n)
 		{
 			cout << n << " squared is " << square(n) << endl;
 		});
@@ -30,10 +45,14 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-vector<int> createNumbers(int from, int to)
+vector<double> createNumbers(double from, double to, double step)
 {
-	vector<int> numbers;
-	for(int i = from; i < to; ++i)
+	vector<double> numbers;
+
+	if((to-from)*step <= 0.0)
+		return numbers;
+
+	for(double i = from; abs(i) < abs(to); i += step)
 	{
 		numbers.push_back(i);
 	}
