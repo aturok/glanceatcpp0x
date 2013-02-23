@@ -1,7 +1,12 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 using std::cout;
 using std::endl;
+using std::vector;
+
+vector<int> createNumbers(int from, int to);
 
 int main(int argc, char** argv)
 {
@@ -12,12 +17,25 @@ int main(int argc, char** argv)
 
 	auto square = [](double a){return a*a;};
 
-	for(int i = 0; i < 10; ++i)
-	{
-		cout << i << " squared is " << square(i) << endl;
-	}
+	auto numbers = createNumbers(0,20);
 
-	cout << "9.5 squared is " << square(9.5) << endl;
+	for_each(
+		numbers.begin(),
+		numbers.end(),
+		[=](int n)
+		{
+			cout << n << " squared is " << square(n) << endl;
+		});
 
 	return 0;
+}
+
+vector<int> createNumbers(int from, int to)
+{
+	vector<int> numbers;
+	for(int i = from; i < to; ++i)
+	{
+		numbers.push_back(i);
+	}
+	return numbers;
 }
