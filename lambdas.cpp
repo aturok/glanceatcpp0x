@@ -45,6 +45,7 @@ int main(int argc, char** argv)
 	auto powered = getPowerer(power);
 	auto numbers = createNumbers(from,to,step);
 
+	double powerSum = 0.0;
 
 	const int outFieldW = 8;
 	cout << "For ["<< from << ", " << to << "). (Step is " << step << ")." << endl;
@@ -52,11 +53,14 @@ int main(int argc, char** argv)
 	for_each(
 		numbers.begin(),
 		numbers.end(),
-		[=](double n)
+		[&](double n)
 		{
-			cout << setw(outFieldW) << n << setw(outFieldW) << powered(n) << endl;
+			double pwd = powered(n);
+			cout << setw(outFieldW) << n << setw(outFieldW) << pwd << endl;
+			powerSum += pwd;
 		});
 
+	cout << endl << "Sum is " << powerSum << endl;
 	return 0;
 }
 
