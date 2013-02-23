@@ -1,0 +1,1 @@
+Here I do my first steps to explore some new C++0x features.
